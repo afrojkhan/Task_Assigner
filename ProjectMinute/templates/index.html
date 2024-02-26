@@ -1,0 +1,14 @@
+{% include "header.html" %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 text-center">
+            <h1 class="display-4">Welcome to ProjectMinute</h1>
+            <p class="lead">Please Add Single or Multiple User </p>
+            <a href="{% url 'add-user' %}" class="btn btn-primary btn-lg">Add User</a>
+            <a href="{% url 'add-multiple-users' %}" class="btn btn-primary btn-lg">Add Multiple Users</a>
+        </div>
+    </div>
+</div>
+
+{% include "footer.html" %}

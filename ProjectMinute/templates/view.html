@@ -1,0 +1,100 @@
+{% include "header.html" %}
+
+    <div class="container my-4">
+      <h1>Assigned Tasks</h1>
+    </div>
+    <div class="container my-4">
+
+
+
+<table class="table table-hover">
+  {% if data %}
+    <th>Sr No</th>
+    <th>User_Name</th>
+    <th>Task_Id</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Assigned Date</th>
+    <th>State</th>
+    <th>Created Date</th>
+    <th>Updated Date</th>
+    
+{% for d in data%}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{d.user_id}}</td>
+            <td>{{d.task_id}}</td>
+            <td>{{d.title}}</td>
+            <td>{{d.description}}</td>
+            <td>{{d.assign_date|slice:":10"}}</td>
+            <td>{{d.state}}</td>
+            <td>{{d.created_date|slice:":10"}} </td>
+            <td>{{d.updated_date|slice:":10"}}</td>
+            
+            <td><a href="{% url 'update-task' d.id %}" class="btn btn-outline-warning btn-sm mx-1">Update</a></td>
+            <td>
+                <button type="button" class="btn btn-outline-danger btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#deleteModal{{ d.id }}">
+                    Delete
+                  </button>
+            </td>
+        </tr>
+        <div class="modal fade" id="deleteModal{{ d.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ d.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel{{ d.id }}">Confirm Delete</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Are you sure you want to delete this record?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <a href="{% url 'delete-tasks' d.id %}" class="btn btn-danger">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+{% endfor %}
+{%else%}
+<h3>No Tasks were assigned</h3>
+{% endif %}
+          
+    </table>
+    <br>
+    <br>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        {% if data.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="/view-tasks/?page=1" tabindex="-1" >First</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="/view-tasks/?page={{data.previous_page_number}}" tabindex="-1" >Previous</a>
+        </li>
+        {% endif %}
+
+        {% for n in pageNumbers  %}
+        <li class="page-item {% if n == data.number %}active{% endif %}">
+          <a class="page-link" href="/view-tasks/?page={{n}}">{{n}}</a>
+        </li>
+        {% endfor %}
+
+        {% if data.has_next %}
+        
+        
+        <li class="page-item">
+          <a class="page-link" href="/view-tasks/?page={{data.next_page_number}}">Next</a>
+        </li>
+        
+        {% endif %}
+        <li class="page-item">
+          <a class="page-link" href="/view-tasks/?page={{lastpage}}">Last</a>
+        </li>
+        
+      </ul>
+    </nav>
+    <br>
+    </div>
+    
+  {% include "footer.html" %}

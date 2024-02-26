@@ -1,0 +1,81 @@
+{% include "header.html" %}
+
+<div class="container mt-5">
+    <div class="row">
+        {% if alert %}
+        <br>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Alert!</strong> If You want to add multiple Users at a time click on this link <strong><a href="{% url 'add-multiple-users' %}">add</a></strong>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <br>
+    {% endif %}
+        {% if added %}
+            <br>
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>Successfully!</strong> Added New User.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <br>
+            {%endif%}
+        {% if added == False %}
+            <br>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Alert!</strong> The Registration is incomplete please provide correct information.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <br>
+        {% endif %}
+        <div class="col-md-6 offset-md-3">
+            <h2 class="mb-4">User Registration</h2>
+            <form method="post" action="{% url 'add-user' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                </div>
+                <div class="mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" class="form-control" id="city" name="city" required>
+                </div>
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select class="form-select" id="gender" name="gender" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="joining_date" class="form-label">Joining Date</label>
+                    <input type="date" class="form-control" id="joining_date" name="joining_date" required>
+                </div>
+                <div class="mb-3">
+                    <label for="state" class="form-label">State</label>
+                    <select class="form-select" id="state" name="state" required>
+                        {% for state in states %}
+                        <option value="{{ state.state_name }}">{{ state.state_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% include "footer.html" %}

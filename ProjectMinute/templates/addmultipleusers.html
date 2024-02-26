@@ -1,0 +1,45 @@
+{% include "header.html" %}
+
+<div class="container mt-5">
+    <div class="row">
+        {% if alert %}
+        <br>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Alert!</strong> If You want to add Single User at a time click on this link <strong><a href="{% url 'add-user' %}">add</a></strong>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <br>
+    {% endif %}
+        {% if added and duplicate_user%}
+            <br>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Warning!</strong>file contains {{duplicate_user}} duplicate users.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <br>
+            {%endif%}
+        {% if added %}
+            <br>
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>Successfully!</strong> Added New Users.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <br>
+        {% endif %}
+        <div class="col-md-6 offset-md-3">
+            <h2 class="mb-4">Add Multiple Users</h2>
+            <p class="mb-3">Upload an Excel file containing user data to add multiple users at once.</p>
+            <form method="post" action="{% url 'add-multiple-users' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="excelFile" class="form-label">Upload Excel File</label>
+                    <input type="file" class="form-control" id="excelFile" name="excelFile" accept=".xlsx, .xls" required>
+                    <small class="form-text text-muted">Supported file formats: .xlsx, .xls</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Upload and Add Users</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% include "footer.html" %}

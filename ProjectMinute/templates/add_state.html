@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New State</title>
+</head>
+<body>
+    <h1>Add New State</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ state.as_p }}
+        <button type="submit">Add State</button>
+    </form>
+</body>
+</html>
